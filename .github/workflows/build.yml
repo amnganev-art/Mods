@@ -13,7 +13,6 @@ jobs:
           for f in *.zip; do
             if unzip -l "$f" | grep -q settings.gradle; then unzip -o "$f"; fi
           done
-          grep -rl setUnlocalizedName src | xargs sed -i 's/setUnlocalizedName/setTranslationKey/g'
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
