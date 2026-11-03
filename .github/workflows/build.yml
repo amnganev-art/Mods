@@ -10,13 +10,15 @@ jobs:
       - name: Unzip project
         run: |
           rm -rf src build.gradle settings.gradle gradle.properties
-          unzip -o akmod-rfg.zip
+          for f in *.zip; do
+            if unzip -l "$f" | grep -q settings.gradle; then unzip -o "$f"; fi
+          done
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: |
             8
-            21
+            25
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: 9.3.1
