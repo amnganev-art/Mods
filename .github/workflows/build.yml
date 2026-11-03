@@ -8,15 +8,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Unzip project
-        run: for f in *.zip; do unzip -o "$f"; done
+        run: |
+          rm -rf src build.gradle settings.gradle gradle.properties
+          unzip -o akmod-rfg.zip
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 8
+          java-version: |
+            8
+            17
       - uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: 4.9
-      - run: gradle setupCIWorkspace build --no-daemon
+          gradle-version: 8.5
+      - run: gradle build --no-daemon -Porg.gradle.java.installations.fromEnv=JAVA_HOME_8_X64
       - uses: actions/upload-artifact@v4
         with:
           name: akmod-jar
